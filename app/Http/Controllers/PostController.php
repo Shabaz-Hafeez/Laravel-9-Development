@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\PostRequest;
+use App\Models\Gallery;
 use App\Models\post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,9 +41,23 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $file = $request->file;
+        if($file)
+        {
+            $fileName = time(). '-'. $file->getClientOriginalName();
+            $filePath = public_path() . '/assets/images';
+            $file->move($filePath , $fileName);
+           
+            $gallery = Gallery::create([
+                'name' => $fileName,
+                'type' => Gallery::Type,
+            ]);
         
+            dd($gallery);
+
 
          post::create([
+            'gallery_id' => $gallery->id,
             'title' => $request->title,
             'user_id' => 1,
             'description' =>$request->description,
@@ -52,7 +67,7 @@ class PostController extends Controller
          ]);
         // dd("Values are saved..... Correctly.....");
 
-            
+    }
 
         $request->Session()->flash('alert-success' , 'Post Saved Successfully');
         // return redirect()->route('posts.create');

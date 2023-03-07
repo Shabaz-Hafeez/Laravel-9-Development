@@ -35,7 +35,7 @@
             
         @endif
 
-    <form method="post" action="{{route('posts.store')}}"  style="margin-top: 35px" id="form">
+    <form method="post" action="{{route('posts.store')}}"  style="margin-top: 35px" id="form" enctype="multipart/form-data">
 
     @csrf()
     <div class="mb-3">
@@ -64,7 +64,11 @@
             <option value="1" @selected (old('is_active') == 1)>Yes</option>
             <option value="0" @selected (old('is_active') == 0)>No</option>
         </select>
+    </div>
 
+    <div class="mb-3">
+        <label for="file">Image</label>
+        <input type="file" name="file" class="form-control">
     </div>
 
     <button class="btn btn-primary" type="submit">Submit</button>

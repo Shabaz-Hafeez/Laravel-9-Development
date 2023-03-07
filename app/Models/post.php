@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\scopes\PostScope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,5 +33,22 @@ class post extends Model
     {
         return $this->morphToMany(Tag::class , 'taggable');
     }
+
+    // public function getTitleAttribute($value)
+    // {
+    //     return ucfirst($value);
+    // }
+    
+    // protected function title(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => ucfirst($value),
+    //         set: fn ($value) => strtolower($value),
+    //     );
+    // }
+    // public static function booted():void
+    // {
+    //     static::addGlobalScope(new PostScope);
+    // }
 
 }
